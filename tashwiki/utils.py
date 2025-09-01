@@ -1,6 +1,9 @@
-def page_name_to_title(name):
-    return name.replace("_", " ")
+import re
 
 
-def title_to_page_name(title):
-    return title.replace(" ", "_")
+def page_name_to_label(page_name):
+    return re.sub(r"_+", " ", page_name)
+
+
+def label_to_page_name(label):
+    return re.sub(r"([ ]+_)|(_[ ]+)|([ ]+)", "_", label)

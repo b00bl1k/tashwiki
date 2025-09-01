@@ -5,16 +5,17 @@ from shutil import copytree
 from importlib import resources
 
 from markdown import Markdown
-from markdown.extensions.wikilinks import WikiLinkExtension
 from jinja2 import Environment, PackageLoader, TemplateNotFound
 
 from tashwiki.config import Config
-from tashwiki.utils import page_name_to_title
+from tashwiki.utils import page_name_to_label
+from tashwiki.wikilinks import WikiLinkExtension
 
 logger = logging.getLogger()
 env = Environment(
     loader=PackageLoader("tashwiki"),
 )
+
 
 def render_page(template, context):
     template = env.get_template(template)
@@ -24,7 +25,7 @@ def render_page(template, context):
 
 def validate_meta(meta: dict) -> dict:
     for key, value in meta.items():
-        if key == "author":
+        if key in ("title", "author"):
             meta[key] = value[0]
         elif key == "template":
             tpl = value[0]
@@ -54,7 +55,7 @@ def build(config: Config):
 
     md = Markdown(extensions=[
         "meta",
-        WikiLinkExtension(base_url="", end_url=".html", html_class="")
+        WikiLinkExtension(base_url="", end_url=".html")
     ])
 
     for md_file in source_dir.rglob("*.md"):
@@ -62,7 +63,7 @@ def build(config: Config):
 
         context = {
             "content": html_content,
-            "title": page_name_to_title(md_file.stem),
+            "title": page_name_to_label(md_file.stem),
             "author": config.site_author,
         }
 
