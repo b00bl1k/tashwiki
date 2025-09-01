@@ -1,6 +1,7 @@
 import logging
 
 import click
+from livereload import Server
 
 from tashwiki import __version__
 from tashwiki.config import Config
@@ -19,7 +20,7 @@ logger = logging.getLogger()
 @click.pass_context
 def cli(ctx, config):
     logging.basicConfig(format="%(message)s", level=logging.INFO)
-    logger.info(f"TashWiki v{__version__}")
+    print(f"TashWiki v{__version__}")
     ctx.obj = {
         "config": Config.from_file(config),
     }
@@ -39,8 +40,16 @@ def build(ctx):
 @click.pass_context
 def serve(ctx, reload, port):
     """Run development web server"""
-    # TODO use livereload to run dev server
-    pass
+    config = ctx.obj["config"]
+
+    def rebuild():
+        build_site(config)
+
+    server = Server()
+    if reload:
+        rebuild()
+        server.watch(config.site_source_dir, func=rebuild)
+    server.serve(port=port, root=config.site_output_dir)
 
 
 def main():

@@ -51,11 +51,11 @@ def build(config: Config):
     output_dir = Path(config.site_output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    logger.info(f"Building site to folder '{output_dir}'...")
+    print(f"Building site to folder '{output_dir}'...")
 
     md = Markdown(extensions=[
         "meta",
-        WikiLinkExtension(base_url="", end_url=".html")
+        WikiLinkExtension(base_url=config.site_baseurl, end_url=".html")
     ])
 
     for md_file in source_dir.rglob("*.md"):
@@ -65,6 +65,7 @@ def build(config: Config):
             "content": html_content,
             "title": page_name_to_label(md_file.stem),
             "author": config.site_author,
+            "baseurl": config.site_baseurl,
         }
 
         meta = validate_meta(md.Meta)

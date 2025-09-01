@@ -29,7 +29,7 @@ class Config:
 
     @property
     def site_baseurl(self):
-        return self.conf.get("site", "baseurl")
+        return self.conf.get("site", "baseurl", fallback="/")
 
     @property
     def site_source_dir(self):
