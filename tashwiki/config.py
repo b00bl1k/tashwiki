@@ -28,6 +28,10 @@ class Config:
         return self.conf.get("site", "name")
 
     @property
+    def site_language(self):
+        return self.conf.get("site", "language", fallback="en")
+
+    @property
     def site_baseurl(self):
         return self.conf.get("site", "baseurl", fallback="/")
 
@@ -38,3 +42,15 @@ class Config:
     @property
     def site_output_dir(self):
         return self.conf.get("site", "output_dir", fallback="output")
+
+    @property
+    def site_main_page(self):
+        return self.conf.get("site", "main_page", fallback="Main page")
+
+    @property
+    def site_categories_page(self):
+        return self.conf.get("site", "categories_page", fallback="Categories")
+
+    @property
+    def site_category_page(self):
+        return self.conf.get("site", "category_page", fallback="Category")
