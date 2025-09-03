@@ -40,6 +40,10 @@ class Config:
         return self.conf.get("site", "source_dir", fallback="content")
 
     @property
+    def site_static_dir(self):
+        return self.conf.get("site", "static_dir", fallback="content/static")
+
+    @property
     def site_output_dir(self):
         return self.conf.get("site", "output_dir", fallback="output")
 

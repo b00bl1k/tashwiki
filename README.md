@@ -50,3 +50,7 @@ TashWiki is still in early development. Expect breaking changes.
 ## License
 
 MIT
+
+## Credits
+
+- [[Rock icons created by Freepik - Flaticon]](https://www.flaticon.com/free-icons/rock)

@@ -32,6 +32,7 @@ class Builder:
         self.categories = Categories(config.site_category_page)
         self.md = Markdown(extensions=[
             "meta",
+            "fenced_code",
             WikiLinkExtension(
                 base_url=config.site_baseurl,
                 end_url=".html",
@@ -90,6 +91,10 @@ class Builder:
     def _copy_static(self):
         with resources.as_file(resources.files("tashwiki.static")) as src_path:
             copytree(src_path, self.output_dir, dirs_exist_ok=True)
+
+        static_dir = Path(self.conf.site_static_dir)
+        if static_dir.exists():
+            copytree(static_dir, self.output_dir, dirs_exist_ok=True)
 
     def build(self):
         """Build site to output folder."""
