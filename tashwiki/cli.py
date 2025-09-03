@@ -5,7 +5,7 @@ from livereload import Server
 
 from tashwiki import __version__
 from tashwiki.config import Config
-from tashwiki.builder import build as build_site
+from tashwiki.builder import Builder
 
 logger = logging.getLogger()
 
@@ -19,7 +19,6 @@ logger = logging.getLogger()
 )
 @click.pass_context
 def cli(ctx, config):
-    logging.basicConfig(format="%(message)s", level=logging.INFO)
     print(f"TashWiki v{__version__}")
     ctx.obj = {
         "config": Config.from_file(config),
@@ -31,7 +30,7 @@ def cli(ctx, config):
 def build(ctx):
     """Build the website."""
     config = ctx.obj["config"]
-    build_site(config)
+    Builder(config).build()
 
 
 @cli.command()
@@ -43,7 +42,7 @@ def serve(ctx, reload, port):
     config = ctx.obj["config"]
 
     def rebuild():
-        build_site(config)
+        Builder(config).build()
 
     server = Server()
     if reload:

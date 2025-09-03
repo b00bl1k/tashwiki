@@ -149,6 +149,21 @@ files = [
 ]
 
 [[package]]
+name = "termcolor"
+version = "3.1.0"
+description = "ANSI color formatting for output in terminal"
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+files = [
+    {file = "termcolor-3.1.0-py3-none-any.whl", hash = "sha256:591dd26b5c2ce03b9e43f391264626557873ce1d379019786f99b0c2bee140aa"},
+    {file = "termcolor-3.1.0.tar.gz", hash = "sha256:6a6dd7fbee581909eeec6a756cff1d7f7c376063b14e4a298dc4980309e55970"},
+]
+
+[package.extras]
+tests = ["pytest", "pytest-cov"]
+
+[[package]]
 name = "tornado"
 version = "6.5.2"
 description = "Tornado is a Python web framework and asynchronous networking library, originally developed at FriendFeed."
@@ -173,4 +188,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">3.12,<4.0"
-content-hash = "940fd4ddc68817085e3809f6b0c9341044a5a3d4324f0500d6992e95c90398be"
+content-hash = "22b02ab0caf0ac68bb03238172a2119d5cdf6b6e05f028a15603197610a6cee6"

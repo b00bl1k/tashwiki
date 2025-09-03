@@ -39,7 +39,7 @@ See also [[Another note]].
 
 ## Roadmap
 
-- [ ] Categories
+- [x] Categories
 - [ ] Themes
 - [ ] Search
 
