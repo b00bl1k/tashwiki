@@ -1,6 +1,6 @@
 [project]
 name = "tashwiki"
-version = "0.1.0"
+version = "0.1.1"
 description = "Wiki-like static site generator"
 authors = [
     {name = "Alexey Ryabov", email = "alex@b00bl1k.ru"}
