@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 
 import click
 from livereload import Server
@@ -8,20 +9,26 @@ from tashwiki.config import Config
 from tashwiki.builder import Builder
 
 logger = logging.getLogger()
+def_conf = Path("config.cfg")
 
 
 @click.group("tashwiki")
 @click.option(
     "--config",
-    type=click.Path(exists=True),
-    default="config.cfg",
+    type=click.Path(),
     help="Path to the configuration file."
 )
 @click.pass_context
 def cli(ctx, config):
     print(f"TashWiki v{__version__}")
+    if not config and def_conf.exists():
+        config = def_conf
+    if config:
+        conf = Config.from_file(config)
+    else:
+        conf = Config.default()
     ctx.obj = {
-        "config": Config.from_file(config),
+        "config": conf,
     }
 
 

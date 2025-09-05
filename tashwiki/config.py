@@ -4,8 +4,7 @@ from configparser import ConfigParser, Error
 
 class Config:
 
-    def __init__(self, config_file: str, config: ConfigParser):
-        self.conf_file = config_file
+    def __init__(self, config: ConfigParser):
         self.conf = config
 
     @classmethod
@@ -15,17 +14,22 @@ class Config:
         try:
             config_parser = ConfigParser()
             config_parser.read(file)
-            return cls(file, config_parser)
+            return cls(config_parser)
         except Error:
             raise ValueError("Config file is invalid.")
 
+    @classmethod
+    def default(cls):
+        config_parser = ConfigParser()
+        return cls(config_parser)
+
     @property
     def site_author(self):
-        return self.conf.get("site", "author")
+        return self.conf.get("site", "author", fallback="")
 
     @property
     def site_name(self):
-        return self.conf.get("site", "name")
+        return self.conf.get("site", "name", fallback="TashWiki")
 
     @property
     def site_language(self):
