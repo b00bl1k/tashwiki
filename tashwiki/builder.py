@@ -42,7 +42,7 @@ class Builder:
 
     def _prepare_context(self) -> dict:
         return {
-            "author": self.conf.site_author,
+            "site_author": self.conf.site_author,
             "site_name": self.conf.site_name,
             "baseurl": self.conf.site_baseurl,
             "language": self.conf.site_language,
