@@ -13,7 +13,7 @@ digital garden or simple personal wiki.
 ## Installation
 
 ```bash
-pip install git+https://github.com/b00bl1k/tashwiki.git
+pip install tashwiki
 ```
 
 ## Usage
