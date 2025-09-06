@@ -25,7 +25,7 @@ jobs:
       - name: Build static files
         id: build
         run: |
-          poetry run tashwiki build
+          poetry run tashwiki --config config.pub.cfg build
       - name: Upload static files as artifact
         id: deployment
         uses: actions/upload-pages-artifact@v3
