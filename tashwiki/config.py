@@ -52,6 +52,10 @@ class Config:
         return self.conf.get("site", "output_dir", fallback="output")
 
     @property
+    def site_theme_dir(self):
+        return self.conf.get("site", "theme_dir", fallback="")
+
+    @property
     def site_main_page(self):
         return self.conf.get("site", "main_page", fallback="Main page")
 

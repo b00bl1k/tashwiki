@@ -5,7 +5,7 @@ from shutil import copytree
 from importlib import resources
 
 from markdown import Markdown
-from jinja2 import Environment, PackageLoader, TemplateNotFound
+from jinja2 import Environment, PackageLoader, FileSystemLoader, TemplateNotFound
 from termcolor import cprint
 
 from tashwiki.categories import Categories, Category
@@ -25,10 +25,18 @@ class Builder:
         self.conf = config
         self.source_dir = Path(config.site_source_dir)
         self.output_dir = Path(config.site_output_dir)
-        self.glob_context = self._prepare_context()
-        self.env = Environment(
-            loader=PackageLoader("tashwiki"),
+        self.theme_dir = (
+            Path(self.conf.site_theme_dir)
+            if self.conf.site_theme_dir
+            else None
         )
+        self.glob_context = self._prepare_context()
+        loader = (
+            FileSystemLoader(self.theme_dir / "templates")
+            if self.theme_dir
+            else PackageLoader("tashwiki")
+        )
+        self.env = Environment(loader=loader)
         self.categories = Categories(config.site_category_page)
         self.md = Markdown(extensions=[
             "meta",
@@ -90,8 +98,14 @@ class Builder:
         return meta
 
     def _copy_static(self):
-        with resources.as_file(resources.files("tashwiki.static")) as src_path:
-            copytree(src_path, self.output_dir, dirs_exist_ok=True)
+        if self.theme_dir:
+            static_path = self.theme_dir / "static"
+            if static_path.exists():
+                copytree(static_path, self.output_dir, dirs_exist_ok=True)
+        else:
+            files = resources.files("tashwiki.static")
+            with resources.as_file(files) as src_path:
+                copytree(src_path, self.output_dir, dirs_exist_ok=True)
 
         static_dir = Path(self.conf.site_static_dir)
         if static_dir.exists():
