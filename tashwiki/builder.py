@@ -40,12 +40,12 @@ class Builder:
         self.categories = Categories(config.site_category_page)
         self.md = Markdown(extensions=[
             "meta",
-            "fenced_code",
             WikiLinkExtension(
                 base_url=config.site_baseurl,
                 end_url=".html",
                 html_class=self._build_link_class,
-            )
+            ),
+            *self.conf.site_md_extensions,
         ])
 
     def _prepare_context(self) -> dict:

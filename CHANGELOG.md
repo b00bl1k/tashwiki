@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 - Support for loading user templates
+- A config key to specify the list of Markdown extensions
 
 ## [0.1.1] - 2025-09-06
 

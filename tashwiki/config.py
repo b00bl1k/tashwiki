@@ -66,3 +66,8 @@ class Config:
     @property
     def site_category_page(self):
         return self.conf.get("site", "category_page", fallback="Category")
+
+    @property
+    def site_md_extensions(self):
+        extensions = self.conf.get("site", "md_extensions", fallback="")
+        return [ext.strip() for ext in extensions.split(",") if ext]
